@@ -5,22 +5,16 @@
 <button onclick="{onConfirm}">予定通り完了</button>
 <div each={ categoryKey, i in issueCategoryKeys }>
   <h3>{ issueCategory[categoryKey].categoryName }</h3>
-  <table>
-    <tr>
-      <th>完了</th>
-      <th>予定</th>
-    </tr>
-    <tr>
-      <td>{ performances[categoryKey].myPageNo }
-      </td>
-      <td>
-        <select onchange="{ onFinishPageChanged }" data-category-key="{ categoryKey }">
-          <option each="{ item in finishPagePulldownValues[categoryKey] }" selected="{ item.selected }">{ item.value }</option>
-        </select>
-        <span each={ v in planPageValues[categoryKey] } >{ v }, </span>
-      </td>
-    </tr>
-  </table>
+
+  <ul>
+    <li>現在 { performances[categoryKey].myPageNo } ページまで完了済み</li>
+    <li>今週
+      <select onchange="{ onFinishPageChanged }" data-category-key="{ categoryKey }">
+        <option each="{ item in finishPagePulldownValues[categoryKey] }" selected="{ item.selected }">{ item.value }</option>
+      </select> ページまでやる予定、今週やるページは... <span class="planPage" each={ v in planPageValues[categoryKey] } >{ v }, </span>
+    </li>
+  </ul>
+
   <table class="DataTable">
     <tr>
       <th>学校の進捗</th>
@@ -28,7 +22,6 @@
       <th>開始 〜 終了ページ</th>
       <th>ページ数</th>
       <th>達成度</th>
-      <th></th>
     </tr>
     <tr each={ issue, i in issueCategory[categoryKey].issues } class="active-{issue.schoolActive}">
       <td><input type="checkbox" class="schoolPageNoCheckbox" checked="{issue.schoolActive}" data-school-page-no="{ issue.pageRange.to }" data-category-key="{ categoryKey }" onchange="{onSchoolPageNoCheckboxChanged}"/></td>
@@ -182,16 +175,41 @@ function saveData(){
 </script>
 
 <style scoped>
+
+h3{
+  margin-top: 2em;
+  border-bottom: solid 1px #eee;
+}
+.planPage{
+  color: #ff5577;
+}
+
 .authed-N{
   display: none;
 }
 
+.DataTable{
+  width: 90%;
+}
 .DataTable td{
   color: #ccc;
 }
 .DataTable .active-true td{
   color: #000;
 }
+
+table{
+  background-color: #eee;
+}
+th{
+  font-size: 13px;
+}
+td{
+  padding: 4px;
+  background-color: #fff;
+  font-size: 13px;
+}
+
 </style>
 
 </issues>
