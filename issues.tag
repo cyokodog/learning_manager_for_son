@@ -1,4 +1,6 @@
 <issues>
+<div class="authed-{ authed }">
+
 <button onclick="{onSave}">保存</button>
 <button onclick="{onConfirm}">予定通り完了</button>
 <div each={ categoryKey, i in issueCategoryKeys }>
@@ -37,8 +39,28 @@
     </tr>
   </table>
 </div>
+</div>
+
 <script>
 var self = this;
+
+watch(function(){
+  self.authed = window.state.authed;
+  if(window.state.authed === 'Y'){
+    self.update();
+    return false;
+  }
+});
+
+function watch(cb){
+  var exec = cb();
+  if(exec !== false){
+    setTimeout(function(){
+      watch(cb);
+    }, 1000);
+  }
+}
+
 self.issueCategoryKeys = ['math', 'lang'];
 self.performances = {};
 self.issueCategory = {};
@@ -160,6 +182,10 @@ function saveData(){
 </script>
 
 <style scoped>
+.authed-N{
+  display: none;
+}
+
 .DataTable td{
   color: #ccc;
 }

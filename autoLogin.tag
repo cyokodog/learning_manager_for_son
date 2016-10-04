@@ -10,6 +10,7 @@ if(authCheckFlg){
 self.provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().getRedirectResult().then(function(result) {
   if(result.user){
+    window.state.authed = 'Y';
     self.info = result.user.email;
     self.update();
   }
