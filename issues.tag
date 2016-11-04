@@ -54,7 +54,7 @@ function watch(cb){
   }
 }
 
-self.issueCategoryKeys = ['math', 'lang'];
+self.issueCategoryKeys = ['math', 'lang', 'science', 'society'];
 self.performances = {};
 self.issueCategory = {};
 self.finishPagePulldownValues = {};
