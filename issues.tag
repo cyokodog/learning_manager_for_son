@@ -1,7 +1,6 @@
 <issues>
 <div class="authed-{ authed }">
 
-<button onclick="{onSave}">保存</button>
 <button onclick="{onConfirm}">予定通り完了</button>
 <div each={ categoryKey, i in issueCategoryKeys }>
   <h3>{ issueCategory[categoryKey].categoryName }</h3>
@@ -72,6 +71,7 @@ self.onSave = function(){
 self.onSchoolPageNoCheckboxChanged = function(event){
   adjustSchoolPageNo(event.target);
   self.update();
+  savePerformance();
 }
 
 self.onFinishPageChanged = function(evnet){
@@ -166,12 +166,22 @@ function adjustSchoolPageNo(currentCheckbox){
   });
 }
 
+function saveIssueCategory(){
+  return firebase.database().ref('issueCategory').set(self.issueCategory);
+}
+function savePerformance(){
+  return firebase.database().ref('performance').set(self.performances);
+}
 function saveData(){
-  firebase.database().ref('issueCategory').set(self.issueCategory).then(function(){
-    firebase.database().ref('performance').set(self.performances).then(function(){
-    });
+  saveIssueCategory().then(function(){
+    savePerformance();
   });
 }
+
+
+
+
+
 </script>
 
 <style scoped>
